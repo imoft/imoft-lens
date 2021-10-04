@@ -14,6 +14,7 @@
 //@input SceneObject blur
 
 //@input SceneObject question
+//@input SceneObject eye
 
 
 
@@ -74,14 +75,14 @@ script.createEvent("TapEvent").bind(function() {
     
     function scanOther() {
          global.getScanResults("Places", function callback(data) {
-        
+        script.eye.enabled = false;
         if (!data) {
             script.scanResult.text = "";
             scanReady = true;
             global.tweenManager.startTween(script.blob, "blobHide");
                 global.tweenManager.startTween(script.blur, "blurOut");
             global.isShowing = false;
-            
+            script.eye.enabled = true;
             return;
         }
         
@@ -126,11 +127,14 @@ script.createEvent("TapEvent").bind(function() {
         if (!data) {
             script.scanResult.text = "";
             scanReady = true;
-            
+            script.eye.enabled = true;
+
             scanOther();
             
             return;
         }
+        
+        script.eye.enabled = false;
         
         var combinedResults = data[0].name;
         if (data.length > 1) {
