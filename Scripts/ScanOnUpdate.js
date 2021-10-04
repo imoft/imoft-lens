@@ -13,6 +13,8 @@
 
 //@input SceneObject blur
 
+//@input SceneObject question
+
 
 
 
@@ -44,21 +46,30 @@ function debugPrint(message) {
     }
 }
 
+function setText(text) {
+    
+}
+
 var scanReady = true;
 global.isShowing = false;
+    global.tweenManager.startTween(script.question, "textShow");
+
 
 script.createEvent("TapEvent").bind(function() {
     
     global.lastTime = getTime();
-
+    
     script.instruction.text = ""
+    
+    global.tweenManager.startTween(script.question, "textShow");
+//    script.instruction.text = ""
     
     //only call scan if enough time has passed since getting last result
     if (!scanReady) {
         return;
     }    
 
-    script.scanResult.text = "";
+//    script.scanResult.text = "";
     scanReady = false;
     
     function scanOther() {
@@ -89,8 +100,9 @@ script.createEvent("TapEvent").bind(function() {
             word = syns[Math.floor(Math.random()*syns.length)]
 
         }
+            
         script.scanResult.text = "What if the imagination of this " + word + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
-                
+   
 //        script.scanResult.text = "What if the imagination of this " + data[Math.floor(Math.random()*data.length)].name + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
          if(!global.isShowing){
             global.tweenManager.startTween(script.blob, "blobTween");
@@ -134,7 +146,8 @@ script.createEvent("TapEvent").bind(function() {
             word = syns[Math.floor(Math.random()*syns.length)]
 
         }
-        script.scanResult.text = "What if the imagination of this " + word + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
+
+        script.scanResult.text = "What if the imagination of this " + word + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?"
                 
         
         if(!global.isShowing){
