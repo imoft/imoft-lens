@@ -5,7 +5,7 @@
 
 //@input SceneObject[] scanObjects
 //@input SceneObject waitingScreen
-//@input SceneObject Blob
+//@input SceneObject tapText
 
 function initialize() {
     scanAllowed(false);
@@ -18,12 +18,14 @@ function scanAllowed(b) {
         script.scanObjects[i].enabled = b;
     }
     script.waitingScreen.enabled = !b;
+    
 }
 
 function scan() {
     global.getScanResults("Objects", function callback(data) {
         if (data) {
             scanAllowed(true);
+            script.tapText.enabled = true;
             
         } else {
             scan();

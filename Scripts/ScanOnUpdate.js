@@ -11,13 +11,15 @@
 
 //@input SceneObject blob
 
-//@input Asset.Material vertexMat
+//@input SceneObject blur
+
 
 
 
 initialize();
 
 function initialize() {
+    global.lastTime = getTime();
 
     if (script.scanTypeText) {
         script.scanTypeText.text = script.scanType;
@@ -43,10 +45,11 @@ function debugPrint(message) {
 }
 
 var scanReady = true;
-var isShowing = false;
+global.isShowing = false;
 
 script.createEvent("TapEvent").bind(function() {
     
+    global.lastTime = getTime();
 
     script.instruction.text = ""
     
@@ -65,7 +68,8 @@ script.createEvent("TapEvent").bind(function() {
             script.scanResult.text = "";
             scanReady = true;
             global.tweenManager.startTween(script.blob, "blobHide");
-            isShowing = false;
+                global.tweenManager.startTween(script.blur, "blurOut");
+            global.isShowing = false;
             
             return;
         }
@@ -88,14 +92,15 @@ script.createEvent("TapEvent").bind(function() {
         script.scanResult.text = "What if the imagination of this " + word + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
                 
 //        script.scanResult.text = "What if the imagination of this " + data[Math.floor(Math.random()*data.length)].name + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
-         if(!isShowing){
+         if(!global.isShowing){
             global.tweenManager.startTween(script.blob, "blobTween");
-            isShowing = true;
+            global.tweenManager.startTween(script.blur, "blurIn");
+            global.isShowing = true;
          } else {
                             global.tweenManager.startTween(script.blob, "blobChange");
 
             }     
-            isShowing = true;
+            global.isShowing = true;
 
         scanReady = true;
     }, function failureCallback() {
@@ -132,9 +137,10 @@ script.createEvent("TapEvent").bind(function() {
         script.scanResult.text = "What if the imagination of this " + word + " could be " + ENDINGS[Math.floor(Math.random()*ENDINGS.length)] + "?";
                 
         
-        if(!isShowing){
+        if(!global.isShowing){
             global.tweenManager.startTween(script.blob, "blobTween");
-            isShowing = true;
+            global.tweenManager.startTween(script.blur, "blurIn");
+            global.isShowing = true;
         } else {
                         global.tweenManager.startTween(script.blob, "blobChange");
 
@@ -728,7 +734,7 @@ var synonyms = {
     "Train": ["Train", "train", "railroad train", "string", "caravan", "wagon train", "gearing", "gear", "geartrain", "power train", "develop", "prepare", "educate", "discipline", "check", "condition", "groom", "school", "cultivate", "civilize", "civilise", "aim", "take", "take aim", "direct", "coach", "rail", "trail"],
     "Training bench": ["Training bench"],
     "Treadmill": ["Treadmill", "treadmill", "treadwheel", "tread-wheel", "salt mine"],
-    "Tree": ["Tree", "tree", "tree diagram", "Sir Herbert Beerbohm Tree", "corner", "shoetree"],
+    "Tree": ["Tree", "tree", "tree"],
     "Tree house": ["Tree house"],
     "Tripod\fTrombone": ["Tripod\fTrombone"],
     "Trousers": ["Trousers", "trouser", "pant"],
